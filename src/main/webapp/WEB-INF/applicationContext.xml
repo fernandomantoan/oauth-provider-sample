@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:oauth="http://www.springframework.org/schema/security/oauth"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+		http://www.springframework.org/schema/security/oauth http://www.springframework.org/schema/security/spring-security-oauth-1.0.xsd">
+	
+	<import resource="spring-database.xml" />
+	
+	<context:component-scan base-package="com.fernandomantoan.tcc.oauth" />
+	
+	<security:http pattern="/resources/**" security="none" />
+	<security:http pattern="/user/login*" security="none" />
+	
+	<security:http auto-config="true" access-denied-page="/user/login" use-expressions="true">
+		<security:intercept-url pattern="/oauth/**" access="isAuthenticated()" />
+		<security:intercept-url pattern="/request_token_authorized.jsp" access="isAuthenticated()" />
+		<security:intercept-url pattern="/dashboard" access="isAuthenticated()" />
+		<security:intercept-url pattern="/index.jsp" access="isAuthenticated()" />
+		<security:intercept-url pattern="/user/profile" access="isAuthenticated()" />
+		<security:intercept-url pattern="/user/info/**" access="isAuthenticated()" />
+		<security:intercept-url pattern="/**" access="hasRole('ROLE_ADMIN')" />
+		
+		<security:form-login default-target-url="/"
+			authentication-failure-url="/user/login?login_error=1"  
+			login-page="/user/login" login-processing-url="/login.do" />
+		<security:logout logout-success-url="/user/login" logout-url="/logout.do" />
+	</security:http>
+	
+	<security:authentication-manager>
+		<security:authentication-provider user-service-ref="userService">
+			<security:password-encoder ref="passwordEncoder" hash="md5" />
+		</security:authentication-provider>
+	</security:authentication-manager>
+	
+	<oauth:provider consumer-details-service-ref="consumerDetails" 
+					token-services-ref="tokenServices" 
+					request-token-url="/oauth/request_token"
+					authenticate-token-url="/oauth/authorize" 
+					authentication-failed-url="/oauth/confirm_access" 
+					access-granted-url="/request_token_authorized.jsp" 
+					access-token-url="/oauth/access_token"
+					require10a="false" />
+	
+	<oauth:consumer-details-service id="consumerDetails">
+		<oauth:consumer name="BillsConsumer" secret="oauth-secret-01" 
+			key="bills-consumer-key" resourceName="Profile" 
+			resourceDescription="User profile Data" />
+		<oauth:consumer name="ContactsConsumer" secret="oauth-secret-02" 
+			key="contacts-consumer-key" resourceName="Profile" 
+			resourceDescription="Your profile personal data" />
+	</oauth:consumer-details-service>
+	
+	<oauth:token-services id="tokenServices" />
+	
+	<bean id="passwordEncoder" 
+		class="org.springframework.security.authentication.encoding.Md5PasswordEncoder" />
+</beans>
