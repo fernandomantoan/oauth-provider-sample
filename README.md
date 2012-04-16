@@ -48,7 +48,18 @@ In the **applicationContext.xml** file it is possible to define which consumers 
 
 Two consumers are defined in this case, which are the two projects developed in the monograph study case. When defining a consumer it is required to set its **name**, **secret**, **key** and the users data and resources that the consumer will use when it's authorized.
 
-## Code Structure
+## Architecture
+
+The application code is separated in logical packages, using some concepts of MVC and DDD. The following structure defines the project architecture:
+
+* **controller**: Defines all the controllers classes used by the application. A controller will use the Spring IoC container to inject services and delegate the business logic to them. When the data is ready, the controller sets them in the view files.
+* **domain.entity**: The entity classes which defines the application domain, represents real world objects used in the project.
+* **domain.repository**: Repository classes are responsible of accessing the database through the JPA EntityManager class, and each repository will deal with a domain entity class.
+* **domain.service**: A service has one or more repositories, and takes care of the domain business logic. It will use the repositories to make database operations.
+
+There are also the **views** files which are located in the **webapp/WEB-INF/views** folder, and are mainly coded using JSP and pure HTML, with some features of CSS3 and HTML5. These views use the Spring MVC web features, like form binding.
+
+The CSS and Javascript resources are stored in the **webapp/resources** directory, which has just one CSS file that defines the application styles.
 
 ## Usage
 
