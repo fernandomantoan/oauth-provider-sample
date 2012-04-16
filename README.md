@@ -34,6 +34,7 @@ This means that the endpoint to the request token is matched by the URL "/oauth/
 
 ### Consumers
 In the applicationContext.xml file it is possible to define which consumers can ask for the users authorization, and these consumers are defined in the following lines:
+
 	<oauth:consumer-details-service id="consumerDetails">
 		<oauth:consumer name="BillsConsumer" secret="oauth-secret-01" 
 			key="bills-consumer-key" resourceName="Profile" 
