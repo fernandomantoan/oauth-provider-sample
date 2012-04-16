@@ -44,7 +44,7 @@ In the applicationContext.xml file it is possible to define which consumers can 
 			resourceDescription="Your profile personal data" />
 	</oauth:consumer-details-service>
 
-Two consumers are defined in this case, which are the two ones developed in the Monograph study case. When defining a consumer it is required to set its name, secret, key and the users data and resources that the consumer will use when it's authorized.
+Two consumers are defined in this case, which are the two projects developed in the Monograph study case. When defining a consumer it is required to set its name, secret, key and the users data and resources that the consumer will use when it's authorized.
 
 
 ## Usage
