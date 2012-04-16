@@ -1,11 +1,11 @@
 # OAuth Provider with Spring Security OAuth
-This project provides an OAuth 1.0a endpoint, and was developed as a study case of a single-sign-on server using the OAuth protocol. It can be used as the main user provider for applications with a common users database. The project uses a MySQL database, Spring Framework components, HTML5 and CSS3.
+This project provides an [OAuth 1.0a](http://tools.ietf.org/html/rfc5849) endpoint, and was developed as a study case of a single-sign-on server using the OAuth protocol. It can be used as the main user provider for applications with a common users database. The project uses a MySQL database, Spring Framework components, HTML5 and CSS3.
 
 ## Configuration
 The project dependencies can be resoulved through Maven, but there are some configurations regarding the database, OAuth endpoints and consumers.
 
 ### Database
-To configure the database settings open the file spring-database.xml located in webapp/WEB-INF, and configure the following parameters:
+To configure the database settings open the file **spring-database.xml** located in **webapp/WEB-INF**, and configure the following parameters:
 
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
 		<property name="user" value="root" />
@@ -18,8 +18,10 @@ To configure the database settings open the file spring-database.xml located in 
 		<property name="idleConnectionTestPeriod" value="200" />
 	</bean>
 
+Just replace the properties **user**, **password**, **driverClass** and **jdbcUrl** to match your server settings. If you change the **driverClass** property, don't forget to change the Hibernate dialect, in the same file.
+
 ### OAuth Endpoints
-Just replace the properties "user", "password", "driverClass" and "jdbcUrl" to match your server settings. If you change the "driverClass" property, don't forget to change the Hibernate dialect, in the same file. The next configuration steps are related to the OAuth endpoints. The configuration file is the applicationContext.xml file, located in the webapp/WEB-INF directory. The endpoints are defined as follows:
+The next configuration steps are related to the OAuth endpoints. The configuration file is the **applicationContext.xml** file, located in the **webapp/WEB-INF** directory. The endpoints are defined as follows:
 
 	<oauth:provider consumer-details-service-ref="consumerDetails" 
 					token-services-ref="tokenServices" 
@@ -30,10 +32,10 @@ Just replace the properties "user", "password", "driverClass" and "jdbcUrl" to m
 					access-token-url="/oauth/access_token"
 					require10a="false" />
 
-This means that the endpoint to the request token is matched by the URL "/oauth/request_token", the authenticated token to "/oauth/authorize", the access confirmation endpoint to "/oauth/confirm_access", the access token to "/oauth/access_token" and when the access is granted the page showed to the user is the "/request_token_authorized.jsp" file. 
+This means that the endpoint to the request token is matched by the URL **/oauth/request_token**, the authentication token to **/oauth/authorize**, the access confirmation endpoint to **/oauth/confirm_access**, the access token to **/oauth/access_token** and when the access is granted the page showed to the user is the **/request_token_authorized.jsp**. 
 
 ### Consumers
-In the applicationContext.xml file it is possible to define which consumers can ask for the users authorization, and these consumers are defined in the following lines:
+In the **applicationContext.xml** file it is possible to define which consumers can ask for the users authorization, and these consumers are defined in the following lines:
 
 	<oauth:consumer-details-service id="consumerDetails">
 		<oauth:consumer name="BillsConsumer" secret="oauth-secret-01" 
@@ -44,7 +46,7 @@ In the applicationContext.xml file it is possible to define which consumers can 
 			resourceDescription="Your profile personal data" />
 	</oauth:consumer-details-service>
 
-Two consumers are defined in this case, which are the two projects developed in the Monograph study case. When defining a consumer it is required to set its name, secret, key and the users data and resources that the consumer will use when it's authorized.
+Two consumers are defined in this case, which are the two projects developed in the monograph study case. When defining a consumer it is required to set its **name**, **secret**, **key** and the users data and resources that the consumer will use when it's authorized.
 
 
 ## Usage
