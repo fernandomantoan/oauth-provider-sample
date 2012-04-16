@@ -48,6 +48,7 @@ In the **applicationContext.xml** file it is possible to define which consumers 
 
 Two consumers are defined in this case, which are the two projects developed in the monograph study case. When defining a consumer it is required to set its **name**, **secret**, **key** and the users data and resources that the consumer will use when it's authorized.
 
+## Code Structure
 
 ## Usage
 
