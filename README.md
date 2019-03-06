@@ -2,7 +2,7 @@
 This project provides an [OAuth 1.0a](http://tools.ietf.org/html/rfc5849) endpoint, and was developed as a study case of a single-sign-on server using the OAuth protocol. It can be used as the main user provider for applications with a common users database. The project uses a MySQL database, Spring Framework components, HTML5 and CSS3.
 
 ## Configuration
-The project dependencies can be resoulved through Maven, but there are some configurations regarding the database, OAuth endpoints and consumers.
+The project dependencies can be resolved through Maven, but there are some configurations regarding the database, OAuth endpoints and consumers.
 
 ### Database
 To configure the database settings open the file **spring-database.xml** located in **webapp/WEB-INF**, and configure the following parameters:
@@ -68,7 +68,7 @@ When implementing a consumer, there are some endpoints that this server provides
 
 * **/oauth/request_token** - Endpoint where the consumer can get a request token
 * **/oauth/authorize** - This endpoint will allow a consumer to get the user's data, and obtaing an access token
-* **/oauth/confirm_access** - This is the endpoint where the consumer can ask for authorization, usually through a redirect containig the request token, after authorizing the access, the user will be redirected again, to the callback URL
+* **/oauth/confirm_access** - This is the endpoint where the consumer can ask for authorization, usually through a redirect containing the request token, after authorizing the access, the user will be redirected again, to the callback URL
 * **/oauth/access_token** - The access token, which will allow the consumer to obtain user data from the server
 
 The server will provide a **/user/info** REST service, which will provide the user profile information, that can be retrieved after getting the access token. This logic is implemented in the **UserController** class, in the **doGetUserInfo()** method.
